@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | LOADIFY</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <main class="auth-wrap">
+    <section class="auth-art">
+      <a class="brand" href="/index.html"><span class="logo">🚛</span><span>LOADIFY</span></a>
+      <h1>Welcome Back</h1>
+      <p>Continue managing return loads, bookings and truck availability.</p>
+    </section>
+    <section class="auth-card">
+      <h2>Login</h2>
+      <form class="form" id="loginForm">
+        <input name="email" type="email" placeholder="Email" required>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+          <input id="password" name="password" type="password" placeholder="Password" required>
+          <button class="btn btn-dark" type="button" id="toggle">Show</button>
+        </div>
+        <label><input type="checkbox" name="remember"> Remember me</label>
+        <button class="btn btn-primary">Login</button>
+      </form>
+      <p>New to Loadify? <a href="/pages/signup.html"><b>Signup</b></a></p>
+    </section>
+  </main>
+  <script src="/js/app.js"></script>
+  <script>
+    toggle.addEventListener("click", () => {
+      password.type = password.type === "password" ? "text" : "password";
+      toggle.textContent = password.type === "password" ? "Show" : "Hide";
+    });
+    loginForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      try {
+        const user = await Loadify.api("/auth/login", { method: "POST", body: JSON.stringify(Object.fromEntries(new FormData(loginForm))) });
+        localStorage.setItem("loadifyUser", JSON.stringify(user));
+        Loadify.toast("Login successful");
+        setTimeout(() => location.href = "/pages/dashboard.html", 700);
+      } catch (err) { Loadify.toast(err.message); }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Trip | LOADIFY</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <main class="dashboard">
+    <aside class="sidebar"><a class="brand" href="/pages/dashboard.html"><span
+          class="logo">🚛</span><span>LOADIFY</span></a>
+      <!-- <nav><a href="/pages/dashboard.html">Dashboard</a><a href="/pages/book-truck.html">Book Truck</a><a
+          href="/pages/my-trips.html">My Trips</a><a href="#" onclick="Loadify.logout()">Logout</a>
+      </nav> -->
+      <nav>
+      <a href="/pages/dashboard.html"><span>🏠</span> Dashboard</a>
+      <a href="/pages/my-trips.html"><span>🚚</span> My Trips</a> 
+      <a href="#" onclick="Loadify.logout()"><span>🚪</span> Logout</a>
+      </nav>
+    </aside>
+    <section class="main">
+      <h1>Upload Truck Trip</h1>
+      <form class="form card" id="tripForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div class="form-group">
+          <label>Truck Registration</label>
+          <input name="truckNumber" placeholder="Truck Number" required>
+        </div>
+
+        <div class="form-group">
+          <label for="truckType">Truck Type & Body</label>
+          <select name="truckType" required>
+            <option value="" disabled selected>Select Truck Category</option>
+
+            <optgroup label="Small Commercial (1-3 Tons)">
+              <option value="Mini-Open">Mini Truck - Open (Tata Ace/Chota Hathi)</option>
+              <option value="Mini-Closed">Mini Truck - Closed Container</option>
+              <option value="Mini-Reefer">Mini Truck - Refrigerated (Vaccines/Dairy)</option>
+            </optgroup>
+
+            <optgroup label="Light & Medium (3-10 Tons)">
+              <option value="Pickup-Open">Pickup - Open (Bolero/Dost)</option>
+              <option value="Pickup-Reefer">Pickup - Refrigerated (Meat/Frozen Food)</option>
+              <option value="6W-Open">6-Wheeler - Open High Bed</option>
+              <option value="6W-Container">6-Wheeler - Closed (FMCG/Electronics)</option>
+              <option value="6W-Reefer">6-Wheeler - Reefer (Cold Chain)</option>
+            </optgroup>
+
+            <optgroup label="Heavy Duty (10-40+ Tons)">
+              <option value="10W-Open">10-Wheeler - Open Body</option>
+              <option value="12W-Container">12-Wheeler - Multi-Axle Container</option>
+              <option value="Trailer-Flatbed">Trailer - Flatbed (Steel/Machinery)</option>
+              <option value="Trailer-Sidebody">Trailer - High Side (Grains/Cement)</option>
+              <option value="Tanker">Liquid Tanker (Fuel/Milk/Chemicals)</option>
+            </optgroup>
+          </select>
+          <!-- <select name="truckType" required>
+            <option value="Mini">Mini Truck (Tata Ace)</option>
+            <option value="Pickup">Pickup (Bolero)</option>
+            <option value="6-Wheeler">6 Wheeler</option>
+            <option value="10-Wheeler">10 Wheeler</option>
+            <option value="Trailer">Trailer</option>
+        </select> -->
+        </div>
+
+        <div class="form-group">
+          <label>Driver Name</label>
+          <input name="driverName" placeholder="Driver Name" required>
+        </div>
+
+        <div class="form-group">
+          <label>Driver Contact</label>
+          <input name="driverPhone" pattern="[0-9]{10}" placeholder="10-Digit Number" required>
+        </div>
+
+        <div class="form-group">
+          <label>Total Capacity (Tons)</label>
+          <input name="capacity" type="number" step="0.1" placeholder="Capacity" required>
+        </div>
+
+        <div class="form-group">
+          <label>Available Capacity (Tons)</label>
+          <input name="availableCapacity" type="number" step="0.1" placeholder="Available" required>
+        </div>
+
+        <div class="form-group">
+          <label>Going From (Source)</label>
+          <input name="source" placeholder="Original Source" required>
+        </div>
+
+        <div class="form-group">
+          <label>Going To (Destination)</label>
+          <input name="destination" placeholder="Original Destination" required>
+        </div>
+
+        <div class="form-group">
+          <label>Departure (Going) Date</label>
+          <input name="departureDate" type="date" required>
+        </div>
+
+        <div class="form-group">
+          <label>Return (Arrival) Date</label>
+          <input name="returnDate" type="date" required>
+        </div>
+
+        <div class="form-group">
+          <label>Arrival Date & Time</label>
+          <input name="estimatedArrivalTime" type="datetime-local">
+        </div>
+
+        <div class="form-group">
+          <label>Rate (₹)</label>
+          <input name="pricePerTon" type="number" step="0.1" placeholder="Price Per Ton" required>
+        </div>
+
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Truck Description</label>
+          <textarea name="description" placeholder="Notes about truck condition..."></textarea>
+        </div>
+
+        <div class="actions" style="grid-column: span 2;">
+          <button class="btn btn-dark" type="reset">Clear</button>
+          <button class="btn btn-primary">Upload Trip</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="/js/app.js"></script>
+  <script>
+    const user = Loadify.currentUser();
+    if (!user) location.href = "/pages/login.html";
+    tripForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(tripForm));
+      data.uploadedBy = user.userId;
+      ["capacity", "availableCapacity", "pricePerTon"].forEach(k => data[k] = Number(data[k]));
+      try {
+        await Loadify.api("/trucks", { method: "POST", body: JSON.stringify(data) });
+        Loadify.toast("Trip uploaded. Return route is now available for booking.");
+        tripForm.reset();
+      } catch (err) { Loadify.toast(err.message); }
+    });
+  </script>
+</body>
+
+</html>

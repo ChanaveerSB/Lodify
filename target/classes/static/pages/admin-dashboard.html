@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | LOADIFY</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <main class="dashboard">
+        <aside class="sidebar">
+            <div class="brand"><span>🛡️ ADMIN</span></div>
+            <nav>
+                <a href="/pages/dashboard.html"><span>🏠</span> Return to Dashboard</a>
+                <a href="#" onclick="Loadify.logout()"><span>🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <section class="main">
+            <h1>Platform Overview</h1>
+
+            <div class="toolbar card">
+                <div class="form-group" style="margin:0; flex-direction: row; align-items: center; gap: 15px;">
+                    <label style="margin:0">Filter Report:</label>
+                    <select id="tallyFilter" onchange="loadAdminReport()">
+                        <option value="day">Today</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid" style="margin-top: 20px;">
+                <div class="card stat tally-highlight">
+                    <label>Total Bookings Value (Revenue)</label>
+                    <strong id="totalTally">₹ 0.00</strong>
+                    <p id="tractionCount">0 Transactions</p>
+                </div>
+                <div class="card">
+                    <label>Market Supply Value</label>
+                    <strong id="totalOffered"
+                        style="font-size: 34px; display: block; margin-top: 10px; color: var(--ink);">₹ 0.00</strong>
+                    <p>Potential Capacity Offered</p>
+                </div>
+            </div>
+
+            <div class="admin-lists-container">
+                <div class="card list-card">
+                    <h3>🏗️ Recent Trucks (Supply)</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Truck Type</th>
+                                <th>Route</th>
+                                <th>Capacity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTrucksList"></tbody>
+                    </table>
+                </div>
+
+                <div class="card list-card">
+                    <h3>📦 Recent Bookings (Demand)</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBookingsList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <h2>User Feedbacks & Complaints</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>User ID</th>
+                            <th>Category</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedbackList"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/app.js"></script>
+    <script>
+        // Security: Kick out if not ADMIN
+        const user = Loadify.currentUser();
+        // Note: If user.role is an Enum in Java, it usually comes as a String like 'ADMIN' in JS
+        if (!user || user.role !== 'ADMIN') {
+            location.href = "/pages/login.html";
+        }
+
+        async function loadAdminReport() {
+            const filter = document.getElementById('tallyFilter').value;
+
+            // DEBUG: This will show you exactly what URL is being hit in the F12 console
+            console.log("Requesting stats for filter:", filter);
+
+            try {
+                // Use the absolute path to be safe
+                const stats = await Loadify.api(`/api/admin/stats?filter=${filter}`);
+
+                console.log("Server Response:", stats); // Check if this prints data
+
+                if (stats) {
+                    // Update Tally
+                    document.getElementById('totalTally').innerText = `₹ ${(stats.totalRevenue || 0).toLocaleString()}`;
+
+                    // Render Tables... (rest of your mapping code)
+                }
+            } catch (error) {
+                console.error("The API call failed. Check if port 9090 is correct.", error);
+            }
+        }
+
+        // Initialize on load
+        window.onload = loadAdminReport;
+    </script>
+</body>
+
+</html>

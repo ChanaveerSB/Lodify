@@ -1,0 +1,84 @@
+2026-05-19T13:42:13.884+05:30  INFO 18272 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : Starting LoadifyApplication using Java 19.0.1 with PID 18272 (C:\Users\LENOVO\Documents\Codex\2026-05-10\create-a-complete-professional-full-stack\target\classes started by LENOVO in C:\Users\LENOVO\Documents\Codex\2026-05-10\create-a-complete-professional-full-stack)
+2026-05-19T13:42:13.904+05:30 DEBUG 18272 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : Running with Spring Boot v3.3.5, Spring v6.1.14
+2026-05-19T13:42:13.906+05:30  INFO 18272 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-05-19T13:42:14.063+05:30  INFO 18272 --- [loadify] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-19T13:42:14.065+05:30  INFO 18272 --- [loadify] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-19T13:42:15.503+05:30  INFO 18272 --- [loadify] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-19T13:42:15.635+05:30  INFO 18272 --- [loadify] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 118 ms. Found 4 JPA repository interfaces.
+2026-05-19T13:42:16.584+05:30  INFO 18272 --- [loadify] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-05-19T13:42:16.607+05:30  INFO 18272 --- [loadify] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-19T13:42:16.608+05:30  INFO 18272 --- [loadify] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-05-19T13:42:16.674+05:30  INFO 18272 --- [loadify] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-19T13:42:16.675+05:30  INFO 18272 --- [loadify] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2607 ms
+2026-05-19T13:42:16.964+05:30  INFO 18272 --- [loadify] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-19T13:42:17.096+05:30  INFO 18272 --- [loadify] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-05-19T13:42:17.185+05:30  INFO 18272 --- [loadify] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-19T13:42:17.729+05:30  INFO 18272 --- [loadify] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-19T13:42:17.772+05:30  INFO 18272 --- [loadify] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-19T13:42:18.457+05:30  INFO 18272 --- [loadify] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1582435d
+2026-05-19T13:42:18.461+05:30  INFO 18272 --- [loadify] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-19T13:42:18.557+05:30  WARN 18272 --- [loadify] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-19T13:42:20.215+05:30  INFO 18272 --- [loadify] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-19T13:42:20.387+05:30  INFO 18272 --- [loadify] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-19T13:42:20.854+05:30  INFO 18272 --- [loadify] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-19T13:42:21.447+05:30  WARN 18272 --- [loadify] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-19T13:42:21.476+05:30  WARN 18272 --- [loadify] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d671114b-6506-4eac-9c74-25286ae0de8e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-05-19T13:42:21.488+05:30  INFO 18272 --- [loadify] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-05-19T13:42:21.611+05:30  INFO 18272 --- [loadify] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-05-19T13:42:22.204+05:30  INFO 18272 --- [loadify] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-05-19T13:42:22.253+05:30  INFO 18272 --- [loadify] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/'
+2026-05-19T13:42:22.268+05:30  INFO 18272 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : Started LoadifyApplication in 9.418 seconds (process running for 10.18)
+2026-05-19T13:42:39.354+05:30  INFO 18272 --- [loadify] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-19T13:42:39.355+05:30  INFO 18272 --- [loadify] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-19T13:42:39.358+05:30  INFO 18272 --- [loadify] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-19T13:42:40.074+05:30  WARN 18272 --- [loadify] [http-nio-9090-exec-6] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-05-19T23:39:17.616+05:30  INFO 16884 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : Starting LoadifyApplication using Java 19.0.1 with PID 16884 (C:\Users\LENOVO\OneDrive\Desktop\Loadify\target\classes started by LENOVO in C:\Users\LENOVO\OneDrive\Desktop\Loadify)
+2026-05-19T23:39:17.622+05:30 DEBUG 16884 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : Running with Spring Boot v3.3.5, Spring v6.1.14
+2026-05-19T23:39:17.624+05:30  INFO 16884 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-05-19T23:39:17.686+05:30  INFO 16884 --- [loadify] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-19T23:39:17.687+05:30  INFO 16884 --- [loadify] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-19T23:39:18.787+05:30  INFO 16884 --- [loadify] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-19T23:39:18.913+05:30  INFO 16884 --- [loadify] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 113 ms. Found 4 JPA repository interfaces.
+2026-05-19T23:39:19.782+05:30  INFO 16884 --- [loadify] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-05-19T23:39:19.802+05:30  INFO 16884 --- [loadify] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-19T23:39:19.802+05:30  INFO 16884 --- [loadify] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-05-19T23:39:19.871+05:30  INFO 16884 --- [loadify] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-19T23:39:19.873+05:30  INFO 16884 --- [loadify] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2183 ms
+2026-05-19T23:39:20.100+05:30  INFO 16884 --- [loadify] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-19T23:39:20.179+05:30  INFO 16884 --- [loadify] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-05-19T23:39:20.229+05:30  INFO 16884 --- [loadify] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-19T23:39:20.599+05:30  INFO 16884 --- [loadify] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-19T23:39:20.636+05:30  INFO 16884 --- [loadify] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-19T23:39:20.965+05:30  INFO 16884 --- [loadify] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@685d2c43
+2026-05-19T23:39:20.967+05:30  INFO 16884 --- [loadify] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-19T23:39:21.028+05:30  WARN 16884 --- [loadify] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-19T23:39:22.272+05:30  INFO 16884 --- [loadify] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-19T23:39:22.460+05:30  INFO 16884 --- [loadify] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-19T23:39:22.926+05:30  INFO 16884 --- [loadify] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-19T23:39:23.461+05:30  WARN 16884 --- [loadify] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-19T23:39:23.488+05:30  WARN 16884 --- [loadify] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 024ad1e3-c7dd-436f-9d3f-7a8941985406
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-05-19T23:39:23.502+05:30  INFO 16884 --- [loadify] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-05-19T23:39:23.596+05:30  INFO 16884 --- [loadify] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-05-19T23:39:24.090+05:30  INFO 16884 --- [loadify] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-05-19T23:39:24.136+05:30  INFO 16884 --- [loadify] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/'
+2026-05-19T23:39:24.151+05:30  INFO 16884 --- [loadify] [restartedMain] com.loadify.LoadifyApplication           : Started LoadifyApplication in 7.059 seconds (process running for 7.562)
+2026-05-19T23:40:09.067+05:30  INFO 16884 --- [loadify] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-19T23:40:09.068+05:30  INFO 16884 --- [loadify] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-19T23:40:09.070+05:30  INFO 16884 --- [loadify] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-05-19T23:40:09.918+05:30  WARN 16884 --- [loadify] [http-nio-9090-exec-4] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
