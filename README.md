@@ -1,6 +1,6 @@
 # LOADIFY
 
-**Official Project Title:** Goods Transport Backhaul Optimization System  
+**Official Project Title:** Lodify (Goods Transport Backhaul Optimization System) 
 **Tagline:** Optimize Every Return Trip
 
 LOADIFY is a full-stack logistics web application that reduces empty return truck trips by connecting transport providers with customers who need goods delivered on return routes.
@@ -64,7 +64,7 @@ mvn spring-boot:run
 5. Open:
 
 ```text
-http://localhost:8080/index.html
+http://localhost:9090/index.html
 ```
 
 ## Main Pages
