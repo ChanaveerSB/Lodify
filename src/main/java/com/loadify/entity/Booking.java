@@ -1,11 +1,14 @@
 package com.loadify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.loadify.enums.BookingStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "bookings")
 public class Booking {
     @Id
@@ -14,10 +17,12 @@ public class Booking {
     private Long bookingId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "truck_id", nullable = false)
     private Truck truck;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "customer_id", nullable = false)
     private User customer;
 

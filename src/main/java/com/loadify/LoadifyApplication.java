@@ -8,4 +8,5 @@ public class LoadifyApplication {
     public static void main(String[] args) {
         SpringApplication.run(LoadifyApplication.class, args);
     }
+    //localhost:9090
 }

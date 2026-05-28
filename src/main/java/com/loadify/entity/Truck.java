@@ -1,5 +1,7 @@
 package com.loadify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.loadify.enums.RouteType;
 import com.loadify.enums.TripStatus;
 import jakarta.persistence.*;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "trucks")
 public class Truck {
     @Id
@@ -17,6 +20,7 @@ public class Truck {
     private Long truckId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "uploaded_by", nullable = false)
     private User uploadedBy;
 

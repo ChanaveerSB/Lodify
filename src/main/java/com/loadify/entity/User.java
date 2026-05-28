@@ -1,5 +1,7 @@
 package com.loadify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.loadify.enums.UserRole;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
     @Id
@@ -39,9 +42,11 @@ public class User {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "uploadedBy")
     private List<Truck> trucks = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Booking> bookings = new ArrayList<>();
 

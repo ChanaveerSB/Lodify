@@ -38,6 +38,30 @@
 
     <script src="/js/app.js"></script>
     <script>
+    const form = document.getElementById('feedbackForm');
+
+    console.log("FORM:", form);
+
+    form.addEventListener('submit', async (e) => {
+
+        console.log("SUBMIT EVENT TRIGGERED");
+
+        e.preventDefault();
+
+        const formData = Object.fromEntries(new FormData(form));
+
+        console.log(formData);
+
+        await Loadify.submitFeedback(formData);
+
+        console.log("AFTER API");
+
+        Loadify.toast("Feedback received. Our team will review it.");
+
+        form.reset();
+    });
+</script>
+    <!-- <script>
         const form = document.getElementById('feedbackForm');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -47,6 +71,6 @@
             Loadify.toast("Feedback received. Our team will review it.");
             form.reset();
         });
-    </script>
+    </script> -->
 </body>
 </html>

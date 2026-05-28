@@ -109,15 +109,102 @@
 
             try {
                 // Use the absolute path to be safe
-                const stats = await Loadify.api(`/api/admin/stats?filter=${filter}`);
+                const response = await fetch(`/api/admin/stats?filter=${filter}`);
+
+                const stats = await response.json();
 
                 console.log("Server Response:", stats); // Check if this prints data
 
-                if (stats) {
-                    // Update Tally
-                    document.getElementById('totalTally').innerText = `₹ ${(stats.totalRevenue || 0).toLocaleString()}`;
+                console.log(stats.recentTrucks);
+                console.log(stats.recentBookings);
 
-                    // Render Tables... (rest of your mapping code)
+                if (stats) {
+
+                    // ================= TALLY =================
+                    document.getElementById('totalTally').innerText =
+                        `${(formatINR(stats.totalRevenue) || 0)}`;
+
+                    // ================= TRUCKS =================
+                    const trucksBody = document.getElementById("adminTrucksList");
+
+                    trucksBody.innerHTML = "";
+
+                    if (stats.recentTrucks.length === 0) {
+
+                        trucksBody.innerHTML = `
+                        <tr>
+                            <td colspan="3">No trucks found</td>
+                            </tr>
+                            `;
+
+                    } else {
+
+                        stats.recentTrucks.forEach(truck => {
+                            trucksBody.innerHTML += `
+                                <tr>
+                                    <td>${truck.truckType}</td>
+                                    <td>${truck.source} → ${truck.destination}</td>
+                                    <td>${truck.capacity}</td>
+                                    </tr>
+                                    `;
+                        });
+
+                    }
+
+                    // ================= BOOKINGS =================
+                    const bookingsBody = document.getElementById("adminBookingsList");
+
+                    bookingsBody.innerHTML = "";
+
+                    if (stats.recentBookings.length === 0) {
+
+                        bookingsBody.innerHTML = `
+                <tr>
+                    <td colspan="3">No bookings found</td>
+                </tr>
+            `;
+
+                    } else {
+
+                        stats.recentBookings.forEach(booking => {
+                            bookingsBody.innerHTML += `
+                    <tr>
+                        <td>${booking.bookingId}</td>
+                        <td>${booking.bookingStatus}</td>
+                        <td>${formatINR(booking.totalPrice)}</td>
+                    </tr>
+                `;
+                        });
+
+                    }
+
+                    // ================= FEEDBACKS =================
+                    const feedbackBody = document.getElementById("feedbackList");
+
+                    feedbackBody.innerHTML = "";
+
+                    if (stats.recentFeedbacks.length === 0) {
+
+                        feedbackBody.innerHTML = `
+        <tr>
+            <td colspan="4">No feedbacks found</td>
+        </tr>
+    `;
+
+                    } else {
+
+                        stats.recentFeedbacks.forEach(feedback => {
+                            feedbackBody.innerHTML += `
+            <tr>
+                <td>${feedback.createdAt || "-"}</td>
+                <td>${feedback.user?.id || "Anonymous"}</td>
+                <td>${feedback.category || "-"}</td>
+                <td>${feedback.message || "-"}</td>
+            </tr>
+        `;
+                        });
+
+                    }
                 }
             } catch (error) {
                 console.error("The API call failed. Check if port 9090 is correct.", error);

@@ -1,5 +1,7 @@
 package com.loadify.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ public class FeedbackController {
     @PostMapping("/feedback")
     public ResponseEntity<?> postFeedback(@RequestBody Feedback feedback) {
         adminService.saveFeedback(feedback);
-        return ResponseEntity.ok("Feedback saved");
+        return ResponseEntity.ok(Map.of(
+        "message", "Feedback saved"
+        ));
     }
 }
