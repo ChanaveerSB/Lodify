@@ -1,6 +1,6 @@
 package com.loadify.enums;
 
 public enum RouteType {
-    ORIGINAL,
+    ONE_WAY,
     RETURN
 }

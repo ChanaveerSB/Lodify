@@ -16,9 +16,9 @@
           href="/pages/my-trips.html">My Trips</a><a href="#" onclick="Loadify.logout()">Logout</a>
       </nav> -->
       <nav>
-      <a href="/pages/dashboard.html"><span>🏠</span> Dashboard</a>
-      <a href="/pages/my-trips.html"><span>🚚</span> My Trips</a> 
-      <a href="#" onclick="Loadify.logout()"><span>🚪</span> Logout</a>
+        <a href="/pages/dashboard.html"><span>🏠</span> Dashboard</a>
+        <a href="/pages/my-trips.html"><span>🚚</span> My Trips</a>
+        <a href="#" onclick="Loadify.logout()"><span>🚪</span> Logout</a>
       </nav>
     </aside>
     <section class="main">
@@ -86,28 +86,28 @@
         </div>
 
         <div class="form-group">
-          <label>Going From (Source)</label>
+          <label>Source (Going From)</label>
           <input name="source" placeholder="Original Source" required>
         </div>
 
         <div class="form-group">
-          <label>Going To (Destination)</label>
+          <label>Destination (Going To)</label>
           <input name="destination" placeholder="Original Destination" required>
         </div>
 
         <div class="form-group">
-          <label>Departure (Going) Date</label>
+          <label>Departure Date</label>
           <input name="departureDate" type="date" required>
         </div>
 
         <div class="form-group">
-          <label>Return (Arrival) Date</label>
-          <input name="returnDate" type="date" required>
+          <label>Arrival Date & Time (Expected)</label>
+          <input name="estimatedArrivalTime" type="datetime-local">
         </div>
 
         <div class="form-group">
-          <label>Arrival Date & Time</label>
-          <input name="estimatedArrivalTime" type="datetime-local">
+          <label>Return (Availability) Date</label>
+          <input name="returnDate" type="date" required>
         </div>
 
         <div class="form-group">
