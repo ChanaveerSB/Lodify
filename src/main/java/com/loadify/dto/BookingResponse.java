@@ -16,7 +16,32 @@ public class BookingResponse {
     private Integer requiredTrucks;
     private BookingStatus bookingStatus;
     private Double totalPrice;
+    private String driverName;
+private String driverPhone;
+private String truckNumber;
 
+
+
+
+public String getTruckNumber() {
+    return truckNumber;
+}
+
+public void setTruckNumber(String truckNumber) {
+    this.truckNumber = truckNumber;
+}    
+    public String getDriverName() {
+    return driverName;
+}
+public void setDriverName(String driverName) {
+    this.driverName = driverName;
+}
+public String getDriverPhone() {
+    return driverPhone;
+}
+public void setDriverPhone(String driverPhone) {
+    this.driverPhone = driverPhone;
+}
     public Long getBookingId() { return bookingId; }
     public void setBookingId(Long bookingId) { this.bookingId = bookingId; }
     public Long getTruckId() { return truckId; }

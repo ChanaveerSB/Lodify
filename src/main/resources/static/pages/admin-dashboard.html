@@ -20,7 +20,7 @@
         <section class="main">
             <h1>Platform Overview</h1>
 
-            <div class="toolbar card">
+            <div class="toolbar card" style="margin-bottom: 20px;">
                 <div class="form-group" style="margin:0; flex-direction: row; align-items: center; gap: 15px;">
                     <label style="margin:0">Filter Report:</label>
                     <select id="tallyFilter" onchange="loadAdminReport()">
@@ -31,22 +31,21 @@
                 </div>
             </div>
 
-            <div class="grid" style="margin-top: 20px;">
+            <div class="grid" style="margin-bottom: 20px;">
                 <div class="card stat tally-highlight">
-                    <label>Total Bookings Value (Revenue)</label>
+                    <label>Total Bookings Cost (Revenue)</label>
                     <strong id="totalTally">₹ 0.00</strong>
                     <p id="tractionCount">0 Transactions</p>
                 </div>
-                <div class="card">
-                    <label>Market Supply Value</label>
-                    <strong id="totalOffered"
-                        style="font-size: 34px; display: block; margin-top: 10px; color: var(--ink);">₹ 0.00</strong>
-                    <p>Potential Capacity Offered</p>
+                <div class="card stat">
+                    <label>Platform Profit</label>
+                    <strong id="platformProfit">₹ 0.00</strong>
+                    <p>Commission Earned</p>
                 </div>
             </div>
 
             <div class="admin-lists-container">
-                <div class="card list-card">
+                <div class="card list-card" style="margin-bottom: 20px;">
                     <h3>🏗️ Recent Trucks (Supply)</h3>
                     <table class="table">
                         <thead>
@@ -54,20 +53,30 @@
                                 <th>Truck Type</th>
                                 <th>Route</th>
                                 <th>Capacity</th>
+                                <th>Driver</th>
+                                <th>Contact</th>
+                                <th>Price/Ton</th>
                             </tr>
                         </thead>
                         <tbody id="adminTrucksList"></tbody>
                     </table>
                 </div>
 
-                <div class="card list-card">
+                <div class="card list-card" style="margin-bottom: 20px;">
                     <h3>📦 Recent Bookings (Demand)</h3>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Booking ID</th>
+                                <th>Customer</th>
+                                <th>Contact</th>
+                                <th>Truck No</th>
+                                <th>Driver</th>
+                                <th>Driver Contact</th>
+                                <th>Booking Cost</th>
+                                <th>Platform Fee</th>
+                                <th>Total Price</th>
                                 <th>Status</th>
-                                <th>Amount</th>
                             </tr>
                         </thead>
                         <tbody id="adminBookingsList"></tbody>
@@ -75,13 +84,13 @@
                 </div>
             </div>
 
-            <div class="card" style="margin-top: 30px;">
+            <div class="card">
                 <h2>User Feedbacks & Complaints</h2>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>User ID</th>
+                            <td>User</td>
                             <th>Category</th>
                             <th>Details</th>
                         </tr>
@@ -100,118 +109,98 @@
         if (!user || user.role !== 'ADMIN') {
             location.href = "/pages/login.html";
         }
-
         async function loadAdminReport() {
             const filter = document.getElementById('tallyFilter').value;
 
-            // DEBUG: This will show you exactly what URL is being hit in the F12 console
-            console.log("Requesting stats for filter:", filter);
-
             try {
-                // Use the absolute path to be safe
                 const response = await fetch(`/api/admin/stats?filter=${filter}`);
-
                 const stats = await response.json();
-
-                console.log("Server Response:", stats); // Check if this prints data
-
-                console.log(stats.recentTrucks);
-                console.log(stats.recentBookings);
 
                 if (stats) {
 
                     // ================= TALLY =================
                     document.getElementById('totalTally').innerText =
-                        `${(formatINR(stats.totalRevenue) || 0)}`;
+                        formatINR(stats.totalRevenue || 0);
 
                     // ================= TRUCKS =================
                     const trucksBody = document.getElementById("adminTrucksList");
-
                     trucksBody.innerHTML = "";
 
                     if (stats.recentTrucks.length === 0) {
-
-                        trucksBody.innerHTML = `
-                        <tr>
-                            <td colspan="3">No trucks found</td>
-                            </tr>
-                            `;
-
+                        trucksBody.innerHTML = `<tr><td colspan="6">No trucks found</td></tr>`;
                     } else {
-
                         stats.recentTrucks.forEach(truck => {
                             trucksBody.innerHTML += `
-                                <tr>
-                                    <td>${truck.truckType}</td>
-                                    <td>${truck.source} → ${truck.destination}</td>
-                                    <td>${truck.capacity}</td>
-                                    </tr>
-                                    `;
+<tr>
+    <td>${truck.truckType}</td>
+    <td>${truck.source} → ${truck.destination}</td>
+    <td>${truck.capacity}</td>
+    <td>${truck.driverName}</td>
+    <td>${truck.driverPhone}</td>
+    <td>${formatINR(truck.pricePerTon)}</td>
+</tr>`;
                         });
-
                     }
 
                     // ================= BOOKINGS =================
                     const bookingsBody = document.getElementById("adminBookingsList");
-
                     bookingsBody.innerHTML = "";
 
-                    if (stats.recentBookings.length === 0) {
+                    stats.recentBookings.forEach(booking => {
 
-                        bookingsBody.innerHTML = `
-                <tr>
-                    <td colspan="3">No bookings found</td>
-                </tr>
-            `;
+                        const basePrice = booking.totalPrice || 0;
+                        const platformFee = Math.max(100, basePrice * 0.05);
+                        const totalAmount = basePrice + platformFee;
 
-                    } else {
+                        bookingsBody.innerHTML += `
+<tr>
+    <td>${booking.bookingId}</td>
+    <td>${booking.customerName || "-"}</td>
+    <td>${booking.customerPhone || "-"}</td>
+    <td>${booking.truckNumber || "-"}</td>
+    <td>${booking.driverName || "-"}</td>
+    <td>${booking.driverPhone || "-"}</td>
+    <td>${formatINR(basePrice)}</td>
+    <td>${formatINR(platformFee)}</td>
+    <td>${formatINR(totalAmount)}</td>
+    <td>${booking.bookingStatus || "Booked"}</td>
+</tr>`;
+                    });
 
-                        stats.recentBookings.forEach(booking => {
-                            bookingsBody.innerHTML += `
-                    <tr>
-                        <td>${booking.bookingId}</td>
-                        <td>${booking.bookingStatus}</td>
-                        <td>${formatINR(booking.totalPrice)}</td>
-                    </tr>
-                `;
-                        });
+                    // ================= PLATFORM PROFIT =================
+                    let platformProfit = 0;
 
-                    }
+                    stats.recentBookings.forEach(b => {
+                        const base = b.totalPrice || 0;
+                        platformProfit += Math.max(100, base * 0.05);
+                    });
 
-                    // ================= FEEDBACKS =================
+                    document.getElementById("platformProfit").innerText =
+                        formatINR(platformProfit);
+
+                    // ================= FEEDBACK =================
                     const feedbackBody = document.getElementById("feedbackList");
-
                     feedbackBody.innerHTML = "";
 
-                    if (stats.recentFeedbacks.length === 0) {
-
-                        feedbackBody.innerHTML = `
-        <tr>
-            <td colspan="4">No feedbacks found</td>
-        </tr>
-    `;
-
-                    } else {
-
-                        stats.recentFeedbacks.forEach(feedback => {
-                            feedbackBody.innerHTML += `
-            <tr>
-                <td>${feedback.createdAt || "-"}</td>
-                <td>${feedback.user?.id || "Anonymous"}</td>
-                <td>${feedback.category || "-"}</td>
-                <td>${feedback.message || "-"}</td>
-            </tr>
-        `;
-                        });
-
-                    }
+                    stats.recentFeedbacks.forEach(feedback => {
+                        feedbackBody.innerHTML += `
+<tr>
+    <td>${feedback.createdAt || "-"}</td>
+    <td>
+        ${feedback.user?.name || feedback.userName || "Anonymous"}<br>
+        <small>${feedback.user?.phone || feedback.userPhone || "-"}</small>
+    </td>
+    <td>${feedback.category || "-"}</td>
+    <td>${feedback.message || "-"}</td>
+</tr>`;
+                    });
                 }
+
             } catch (error) {
-                console.error("The API call failed. Check if port 9090 is correct.", error);
+                console.error("API Error:", error);
             }
         }
 
-        // Initialize on load
         window.onload = loadAdminReport;
     </script>
 </body>

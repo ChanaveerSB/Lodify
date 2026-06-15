@@ -216,6 +216,12 @@ public class BookingService {
         response.setRequiredTrucks(booking.getRequiredTrucks());
         response.setBookingStatus(booking.getBookingStatus());
         response.setTotalPrice(booking.getTotalPrice());
+        // Truck truck = booking.getTruck();
+    if (booking.getTruck() != null) {
+        response.setTruckNumber(booking.getTruck().getTruckNumber());
+        response.setDriverName(booking.getTruck().getDriverName());
+        response.setDriverPhone(booking.getTruck().getDriverPhone());
+    }
 
         return response;
     }

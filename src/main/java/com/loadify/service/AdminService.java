@@ -2,11 +2,14 @@ package com.loadify.service;
 
 import java.time.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loadify.dto.BookingResponse;
+import com.loadify.entity.Booking;
 import com.loadify.entity.Feedback;
 import com.loadify.repository.BookingRepository;
 import com.loadify.repository.FeedbackRepository;
@@ -40,10 +43,24 @@ public class AdminService {
         stats.put("recentTrucks", truckRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(start));
 
         // 3. Demand Data (Bookings)
-        stats.put("recentBookings", bookingRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(start));
-        
+        List<BookingResponse> bookings =
+        bookingRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(start)
+        .stream()
+        .map(this::toBookingResponse)
+        .toList();
+
+stats.put("recentBookings", bookings);
+
         // 4. Feedback Data (Complaints) - IMPORTANT: Don't leave this out!
         stats.put("recentFeedbacks", feedbackRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(start));
+
+        double platformProfit =
+        bookingRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(start)
+        .stream()
+        .mapToDouble(b -> Math.max(100, b.getTotalPrice() * 0.05))
+        .sum();
+
+stats.put("platformProfit", platformProfit);
 
         return stats;
     }
@@ -53,4 +70,28 @@ public class AdminService {
         feedback.setCreatedAt(LocalDateTime.now()); // Ensure timestamp is set before saving
         feedbackRepository.save(feedback);
     }
+
+    private BookingResponse toBookingResponse(Booking booking) {
+
+    BookingResponse response = new BookingResponse();
+
+    response.setBookingId(booking.getBookingId());
+    response.setCustomerName(booking.getCustomerName());
+    response.setCustomerPhone(booking.getCustomerPhone());
+    response.setGoodsType(booking.getGoodsType());
+    response.setPickupLocation(booking.getPickupLocation());
+    response.setDropLocation(booking.getDropLocation());
+    response.setBookingDate(booking.getBookingDate());
+    response.setTotalPrice(booking.getTotalPrice());
+    
+    // 🔥 TRUCK DATA (THIS WAS MISSING IN ADMIN API)
+    if (booking.getTruck() != null) {
+        response.setTruckNumber(booking.getTruck().getTruckNumber());
+        response.setDriverName(booking.getTruck().getDriverName());
+        response.setDriverPhone(booking.getTruck().getDriverPhone());
+    }
+    
+    // response.setBookingStatus(booking.getBookingStatus());
+    return response;
+}
 }

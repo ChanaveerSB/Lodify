@@ -1,4 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>My Bookings | LOADIFY</title><link rel="stylesheet" href="/css/styles.css"></head>
-<body><main class="dashboard"><aside class="sidebar"><a class="brand" href="/pages/dashboard.html"><span class="logo">🚛</span><span>LOADIFY</span></a><nav><a href="/pages/dashboard.html">Dashboard</a><a href="/pages/book-truck.html">Book Truck</a><a href="#" onclick="Loadify.logout()">Logout</a></nav></aside><section class="main"><div class="toolbar"><h1>My Bookings</h1><span class="badge">Timeline tracking ready</span></div><table class="table"><thead><tr><th>Goods</th><th>Pickup</th><th>Drop</th><th>Price</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></section></main><script src="/js/app.js"></script><script>const u=Loadify.currentUser(); if(!u) location.href='/pages/login.html'; Loadify.api(`/bookings/customer/${u.userId}`).then(list=>rows.innerHTML=list.map(b=>`<tr><td>${b.goodsType}</td><td>${b.pickupLocation}</td><td>${b.dropLocation}</td><td>Rs. ${b.totalPrice}</td><td><span class="badge">${b.bookingStatus}</span></td></tr>`).join('')).catch(()=>rows.innerHTML='<tr><td colspan="5">No bookings yet.</td></tr>');</script></body></html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | LOADIFY</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <main class="dashboard">
+        <aside class="sidebar"><a class="brand" href="/pages/dashboard.html"><span
+                    class="logo">🚛</span><span>LOADIFY</span></a>
+            <nav><a href="/pages/dashboard.html">Dashboard</a><a href="/pages/book-truck.html">Book Truck</a><a href="#"
+                    onclick="Loadify.logout()">Logout</a></nav>
+        </aside>
+        <section class="main">
+            <div class="toolbar">
+                <h1>My Bookings</h1><span class="badge">Timeline tracking ready</span>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Goods</th>
+                        <th>Pickup</th>
+                        <th>Drop</th>
+                        <th>Driver</th>
+                        <th>Contact</th>
+                        <th>Booking Price</th>
+                        <th>Platform Fee</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </section>
+    </main>
+    <script src="/js/app.js"></script>
+    <script>
+        const u = Loadify.currentUser();
+
+        if (!u) {
+            location.href = '/pages/login.html';
+        }
+
+        Loadify.api(`/bookings/customer/${u.userId}`)
+            .then(list => rows.innerHTML = list.map(b => {
+
+                const price = b.totalPrice;
+                const platformFee = Math.max(100, price * 0.05);
+                const finalPrice = price + platformFee;
+
+                return `
+    <tr>
+        <td>${b.goodsType}</td>
+        <td>${b.pickupLocation}</td>
+        <td>${b.dropLocation}</td>
+        <td>${b.driverName}</td>
+        <td>${b.driverPhone}</td>
+
+        <td>Rs. ${price}</td>
+        <td>Rs. ${platformFee}</td>
+        <td>Rs. ${finalPrice}</td>
+
+        <td>Booked</td>
+    </tr>`;
+            }).join(''))
+            .catch(() => rows.innerHTML =
+                '<tr><td colspan="7">No bookings yet.</td></tr>');
+    </script>
+</body>
+
+</html>
