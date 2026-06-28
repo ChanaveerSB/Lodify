@@ -33,7 +33,42 @@
         </section>
     </main>
     <script src="/js/app.js"></script>
-    <script>const u = Loadify.currentUser(); if (!u) location.href = '/pages/login.html'; Loadify.api(`/trucks/provider/${u.userId}`).then(list => rows.innerHTML = list.map(t => `<tr><td>${t.source} -> ${t.destination}</td><td>${t.departureDate}</td><td>${t.availableCapacity}/${t.capacity}</td><td><span class="badge">${t.status}</span></td></tr>`).join('')).catch(() => rows.innerHTML = '<tr><td colspan="4">No posted trips yet.</td></tr>');</script>
+    <!-- <script>const u = Loadify.currentUser(); if (!u) location.href = '/pages/login.html'; Loadify.api(`/trucks/provider/${u.userId}`).then(list => rows.innerHTML = list.map(t => `<tr><td>${t.destination} -> ${t.source}</td><td>${t.departureDate}</td><td>${t.availableCapacity}/${t.capacity}</td><td><span class="badge">${t.status}</span></td></tr>`).join('')).catch(() => rows.innerHTML = '<tr><td colspan="4">No posted trips yet.</td></tr>');</script> -->
+        <script>
+const u = Loadify.currentUser();
+
+if (!u) {
+    location.href = '/pages/login.html';
+}
+
+Loadify.api(`/trucks/provider/${u.userId}`)
+    .then(list => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        rows.innerHTML = list.map(t => {
+            const departureDate = new Date(t.departureDate);
+            departureDate.setHours(0, 0, 0, 0);
+
+            const status = departureDate < today
+                ? "Not Available"
+                : t.status;
+
+            return `
+                <tr>
+                    <td>${t.destination} -> ${t.source}</td>
+                    <td>${t.departureDate}</td>
+                    <td>${t.availableCapacity}/${t.capacity}</td>
+                    <td><span class="badge">${status}</span></td>
+                </tr>
+            `;
+        }).join('');
+    })
+    .catch(() => {
+        rows.innerHTML =
+            '<tr><td colspan="4">No posted trips yet.</td></tr>';
+    });
+</script>
 </body>
 
 </html>
